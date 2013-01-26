@@ -1,0 +1,28 @@
+;; Semantically invalid program for the resaons described below
+
+
+int N;
+int N;                        ;; multiple declarations on N
+
+;; Function main (main)
+
+main ()
+{
+  int x;
+  int c;
+  int b;
+  int a;
+
+<bb 2>:
+  c = 2.12123e10;
+  a = b;
+  x = main;                  ;; function name appears as a variable RHS
+  c = a;
+  x = N;
+  main = 3;                  ;; function name appears on LHS
+  N = cc;                    ;; cc not declared anywhere
+  return;
+
+}
+
+

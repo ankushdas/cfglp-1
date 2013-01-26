@@ -1,0 +1,24 @@
+;; Syntactically invalid program
+
+;; Function main (main)
+
+main ()                              
+{
+  int x;
+  int c;
+  int b;
+  int a;
+
+<bb 2>:
+  c = 2;
+  a = c;
+  a = 5;
+  c = a;
+  x = b;                           
+  c = 3;
+  N = c;                                  ;; N has not been declared                           
+  return 10;                              ;; main cannot return any value
+
+}
+
+

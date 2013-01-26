@@ -1,0 +1,44 @@
+
+;; Function main (main)
+
+  float D;
+  int N;
+
+main ()
+{
+  float x;
+  int c;
+  int b;
+  int a;
+  float D.4;
+  float D.3;
+  int N.2;
+  int D.2724;
+  int D.2723;
+  float D.1;
+  int D.2721;
+  int N.0;
+
+<bb 2>:
+  b = 10;
+  c = 2;
+  a = b;
+  x = 5.0e+0;
+  N.0 = N;
+  D.2721 = b * N.0;
+  c = D.2721 + a;
+  D.1 = D;
+  x = D.1 * 2.0e+0;
+  D.2723 = a * 2;
+  D.2724 = b * 3;
+  c = D.2723 + D.2724;
+  N.2 = c + a;
+  N = N.2;
+  D.3 = D;
+  D.4 = x + D.3;
+  D = D.4;
+  return;
+
+}
+
+

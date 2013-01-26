@@ -1,0 +1,32 @@
+;; Valid program for compilation
+;; but no interpretation because
+;; b is used before being defined.
+
+;; Function main (main)
+
+int main;
+
+int N;
+
+main ()
+{
+  int x;
+  int c;
+  int b;
+  int a;
+  float z;
+
+<bb 2>:
+  c = 2;
+  a = c;
+  z = x + y;
+  z = z * y * x + r - t / y;
+  x = 5;
+  c = a;
+  x = N;
+  c = 3;
+  N = c;
+  return;
+
+}
+
