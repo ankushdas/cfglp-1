@@ -366,3 +366,19 @@ eval_Result sym_Entry_for_Int_Var::get_Value_of_Evaluation()
     eval_Result res(value,NULL,int_Res);
     return res;
 }
+
+/* new implementation*/
+void sym_Entry_for_Float_Var::set_Value_of_Evaluation(eval_Result res)
+{
+    CHECK_INVARIANT (res.which_Result() == float_Res, "Integer object can get integer result only")
+    set_Value(res.get_Float_Val());
+    reset_Undefined_Status();
+}
+
+eval_Result sym_Entry_for_Float_Var::get_Value_of_Evaluation()
+{
+    string mesg = "Variable " + name + " has not been defined before its use";
+    report_Violation_and_Abort(undefined==false, mesg);
+    eval_Result res(value,NULL,float_Res);
+    return res;
+}

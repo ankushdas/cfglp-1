@@ -80,9 +80,9 @@ main(int argc, char * argv[])
      if ((error_Status() == false) && (cmd_options.show_Program()))
          program_object_P->print_Program();
 
-//     /****************** Evaluate ******************/
-//     if ((error_Status() == false) && (cmd_options.do_Eval()))
-//         program_object_P->evaluate();
+     /****************** Evaluate ******************/
+     if ((error_Status() == false) && (cmd_options.do_Eval()))
+         program_object_P->evaluate();
 
 //     /****************** Compile ******************/
 

@@ -104,8 +104,34 @@ void sym_Entry_for_Int_Var::print_Sym_Entry_Eval_Details(ostream * sym_fp)
         ss << "Undefined";
     else
         ss << value;
+    
+    if(var_t == real) {
+        *sym_fp << " Name: " << name << " Value " << ss.str() << "\n";
+    }
+    
+}
 
-    *sym_fp << " Name: " << name << " Value " << ss.str() << "\n";
+void sym_Entry_for_Float_Var::print_Sym_Entry_Eval_Details(ostream * sym_fp)
+{
+
+    string k_mesg = "The entity type of name " + name + " should have been variable";
+    CHECK_INVARIANT (en_type == entity_Var, k_mesg)
+    const string en_type_name = "VAR";
+
+    string t_mesg = "The type of entity_Var " + name + " should have been int_Val";
+    CHECK_INVARIANT (type == float_Val, t_mesg)
+    const string type_name = "FLOAT";
+    
+    stringstream ss;
+    if (undefined)
+        ss << "Undefined";
+    else
+        ss << value;
+
+    if(var_t == real) {
+        *sym_fp << " Name: " << name << " Value " << ss.str() << "\n";
+    }
+    
 }
 
 /**************************** functions for generating assembly ******************/

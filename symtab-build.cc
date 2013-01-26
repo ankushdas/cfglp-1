@@ -185,7 +185,18 @@ int sym_List::get_Int_Val (string name)
 
     CHECK_INVARIANT (se_P != NULL, mesg)
 
-    return se_P->get_Value();
+    return ((sym_Entry_for_Int_Var*)se_P)->get_Value();
+}
+
+double sym_List::get_Float_Val (string name)
+{
+    sym_Entry_Ptr se_P = sym_list[name];
+
+    string mesg = "Variable " + name + "has not been entered in the symtab";
+
+    CHECK_INVARIANT (se_P != NULL, mesg)
+
+    return ((sym_Entry_for_Float_Var*)se_P)->get_Value();
 }
 
 sym_List& sym_List::operator=(sym_List& rhs)
@@ -234,10 +245,10 @@ void sym_Entry::set_End_Offset(int num)
     CHECK_INVARIANT(SHOULD_NOT_REACH, "Method set_End_Offset is not relevant for this subclass of sym_Entry")
 }
 
-void sym_Entry::set_Value(int num)
-{
-    CHECK_INVARIANT(SHOULD_NOT_REACH, "Method set_Value is not relevant for this subclass of sym_Entry")
-}
+//void sym_Entry::set_Value(int num)
+//{
+//    CHECK_INVARIANT(SHOULD_NOT_REACH, "Method set_Value is not relevant for this subclass of sym_Entry")
+//}
 
 int sym_Entry::get_Start_Offset()
 {
@@ -249,10 +260,10 @@ int sym_Entry::get_End_Offset()
     CHECK_INVARIANT(SHOULD_NOT_REACH, "Method get_End_Offset is not relevant for this subclass of sym_Entry")
 }
 
-int sym_Entry::get_Value()
-{
-    CHECK_INVARIANT(SHOULD_NOT_REACH, "Method get_Value is not relevant for this subclass of sym_Entry")
-}
+//int sym_Entry::get_Value()
+//{
+//    CHECK_INVARIANT(SHOULD_NOT_REACH, "Method get_Value is not relevant for this subclass of sym_Entry")
+//}
 
 void sym_Entry::set_Reg(reg_Desc_Ptr reg_desc_ptr)
 {
@@ -300,8 +311,20 @@ void sym_List::set_Int_Val (string name, int value)
 
     CHECK_INVARIANT (se_P != NULL, mesg)
 
-    se_P->set_Value(value);
+    ((sym_Entry_for_Int_Var*)se_P)->set_Value(value);
 }
+
+void sym_List::set_Float_Val (string name, double value)
+{
+    sym_Entry_Ptr se_P = sym_list[name];
+
+    string mesg = "Variable " + name + "has not been entered in the symtab";
+
+    CHECK_INVARIANT (se_P != NULL, mesg)
+
+    ((sym_Entry_for_Float_Var*)se_P)->set_Value(value);
+}
+
 
 /********************** compile ***********************/
 
@@ -404,13 +427,13 @@ int sym_Entry_for_Float_Var::get_Start_Offset()         { return start_offset;  
 
 int sym_Entry_for_Float_Var::get_End_Offset()           { return end_offset;    }
 
-int sym_Entry_for_Float_Var::get_Value()                { return value;    }
+double sym_Entry_for_Float_Var::get_Value()                { return value;    }
 
 void sym_Entry_for_Float_Var::set_Start_Offset(int num) { start_offset = num;    }
 
 void sym_Entry_for_Float_Var::set_End_Offset(int num)   { end_offset = num;    }
 
-void sym_Entry_for_Float_Var::set_Value(int num)        { value = num;    }
+void sym_Entry_for_Float_Var::set_Value(double num)        { value = num;    }
 
 bool sym_Entry_for_Float_Var::is_Undefined()            { return undefined; }
 

@@ -1,4 +1,4 @@
-//note: possible pains in entity_Type
+
 /*********************************************************************************************
 
                                 cfglp : A CFG Language Processor
@@ -82,8 +82,8 @@ class sym_Entry
     virtual void set_Sym_Entry_Ptr(ast_Ptr p);
 
     /* Functions required for evaluation */
-    virtual void set_Value(int num) ;
-    virtual int get_Value() ;
+    //virtual void set_Value(int num) ;
+    //virtual int get_Value() ;
     virtual void set_Value_of_Evaluation(eval_Result res) ;
     virtual eval_Result get_Value_of_Evaluation() ;
     virtual void print_Sym_Entry_Eval_Details(ostream * sym_fp) {}
@@ -207,16 +207,16 @@ class sym_Entry_for_Float_Var : public sym_Entry
     //void print_Sym_for_Assembly(ostream * sym_fp);
 
     /* Functions required for evaluation */
-    void set_Value(int num);
-    int get_Value();
+    void set_Value(double num);
+    double get_Value();
 
     bool is_Undefined();            
     void reset_Undefined_Status();
 
-    //void set_Value_of_Evaluation(eval_Result res);
-    //eval_Result get_Value_of_Evaluation();
+    void set_Value_of_Evaluation(eval_Result res);
+    eval_Result get_Value_of_Evaluation();
 
-    //void print_Sym_Entry_Eval_Details(ostream * sym_fp);
+    void print_Sym_Entry_Eval_Details(ostream * sym_fp);
 
     /* General dump functions */
     void print_Sym_Entry_Details(ostream *p);
@@ -264,6 +264,10 @@ class sym_List
     /* Functions required for evaluation */
     void set_Int_Val (string name, int value);
     int get_Int_Val (string name);
+    
+    void set_Float_Val (string name, double value);
+    double get_Float_Val (string name);
+    
     void print_Sym_Node_List_for_Evaluation(ostream * sym_fp);
 
     /* Functions required for compilation */

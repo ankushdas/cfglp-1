@@ -47,11 +47,21 @@ eval_Result::eval_Result(int num, bb_Ptr bb, res_Type rt)
     relevant_result = rt;
 }
 
+eval_Result::eval_Result(double num, bb_Ptr bb, res_Type rt)
+{
+    float_res = num;
+    next_BB = bb;
+    relevant_result = rt;
+}
+
+
 int eval_Result::get_Int_Val()             { return int_res; }
 bb_Ptr eval_Result::get_Next_BB()          { return next_BB; }
 res_Type eval_Result::which_Result()       { return relevant_result; }
 void  eval_Result::set_Int_Val(int n)      { int_res = n; }
 void eval_Result::set_Next_BB(bb_Ptr bb_p) { next_BB = bb_p; }
+double eval_Result::get_Float_Val()             { return float_res; }
+void eval_Result::set_Float_Val(double n)      { float_res = n; }
 
 void eval_Result::print_Eval_Result()
 {

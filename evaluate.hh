@@ -42,21 +42,26 @@ using namespace std;
    results in domain of underlying values.
 */
 
-typedef enum {int_Res, next_BB_Res, void_Res} res_Type;
+typedef enum {int_Res, float_Res, next_BB_Res, void_Res} res_Type;
 
 class eval_Result {
     int int_res;
+    double float_res;
     bb_Ptr next_BB;
     res_Type relevant_result;
 
   public:
     
     eval_Result(int num, bb_Ptr bb, res_Type rt);
+    eval_Result(double num, bb_Ptr bb, res_Type rt);
     ~eval_Result() {}
     
     int get_Int_Val();
-    void  set_Int_Val(int n);
+    void set_Int_Val(int n);
 
+    double get_Float_Val();
+    void set_Float_Val(double n);
+    
     bb_Ptr get_Next_BB();
     void set_Next_BB(bb_Ptr bb_p);
 
