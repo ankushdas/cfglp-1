@@ -81,8 +81,8 @@ main(int argc, char * argv[])
          program_object_P->print_Program();
 
      /****************** Evaluate ******************/
-//     if ((error_Status() == false) && (cmd_options.do_Eval()))
-//         program_object_P->evaluate();
+     if ((error_Status() == false) && (cmd_options.do_Eval()))
+         program_object_P->evaluate();
 
 //     /****************** Compile ******************/
 
