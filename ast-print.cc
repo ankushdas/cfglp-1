@@ -55,7 +55,7 @@ void name_Ast::print_Node(ostream * name_fp)
     *name_fp << "(Name:(" << name << "))";
 }
 
-void num_Ast::print_Node(ostream * num_fp)
+void int_num_Ast::print_Node(ostream * num_fp)
 {
     *num_fp << "(Num:(" << num << "))";
 }
@@ -83,19 +83,6 @@ void asgn_Ast::print_Eval_Result(asgn_Ast * ast)
    se_P->print_Sym_Entry_Eval_Details(eval_fp);
 }
 
-/* new crude implementation */
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//void arti_var_Ast::print_Node(ostream * name_fp)
-//{
-//    //CHECK_INVARIANT(SHOULD_NOT_REACH, "arti var should can not be called for print_Node")
-//    *name_fp << "(Name:(" << name << "))";
-//}
-
 void exp_var_Ast::print_Node(ostream * name_fp)
 {
     *name_fp << "(Name:(" << name << "))";
@@ -105,6 +92,12 @@ void float_num_Ast::print_Node(ostream * num_fp)
 {
     *num_fp << "(Num:(" << num << "))";
 }
+
+void num_Ast::print_Node(ostream * num_fp)
+{
+    CHECK_INVARIANT(false, "print_Node() called on wrong node")
+}
+
 
 /************* Methods for class mult_Ast ******************/
 
@@ -142,179 +135,10 @@ void div_Ast::print_Node(ostream * div_fp) {
 
 void uminus_Ast::print_Node(ostream * uminus_fp) {
     *uminus_fp<<"(UMINUS: (";
-    pt->print_Node(uminus_fp);
+    left->print_Node(uminus_fp);
     *uminus_fp<<"))";
 }
 
-
-/*
-Expanding AST
-*/
-
-
-void check_for_arti(ast_Ptr root)
-{
-	ast_Ptr ptr;
-	
-	if (root->get_Node_Arity() == binary)
-	{
-		if ((root->get_Left())->get_Tree_Op() == arti_var_Leaf)
-		{
-			
-			string str = get_Var_Name((root->get_Left())->get_Name());
-			ptr = new name_Ast(str);
-			root->assign_Left(ptr);
-		}
-		
-		if ((root->get_Right())->get_Tree_Op() == arti_var_Leaf)
-		{
-			ptr = new name_Ast(get_Var_Name((root->get_Right())->get_Name()));
-			root->assign_Right(ptr);
-		}
-		
-		check_for_arti(root->get_Left());
-		check_for_arti(root->get_Right());
-	}
-	
-	else if (root->get_Node_Arity() == unary)
-	{
-		if ((root->get_Pt())->get_Tree_Op() == arti_var_Leaf)
-		{
-			ptr = new name_Ast(get_Var_Name((root->get_Right())->get_Name()));
-			root->assign_Pt(ptr);
-		}
-		
-		check_for_arti(root->get_Pt());
-	}
-}
-
-void check_for_exp(ast_Ptr root, std::map<string,ast_Ptr> exp)
-{
-	sym_Entry_Ptr sym_ptr;
-	if (root->get_Tree_Op() == asgn)
-	{
-		if ((root->get_Right())->get_Tree_Op() == exp_var_Leaf)
-		{
-			//cout<<exp[(root->get_Right())->get_Name()]<<endl;
-			
-			sym_ptr = symtab_in_scope_P->get_Sym_Entry((root->get_Right())->get_Name());
-			root->assign_Right(sym_ptr->get_Sym_Entry_Ptr());
-			
-			//root->assign_Right(exp[(root->get_Right())->get_Name()]);
-		}
-		check_for_exp(root->get_Right(),exp);
-	}
-	
-	else if (root->get_Node_Arity() == binary)
-	{
-		if ((root->get_Right())->get_Tree_Op() == exp_var_Leaf)
-		{
-			//cout<<exp[(root->get_Right())->get_Name()]<<endl;
-			if (exp[(root->get_Right())->get_Name()] != 0)
-			{
-				sym_ptr = symtab_in_scope_P->get_Sym_Entry((root->get_Right())->get_Name());
-				root->assign_Right(sym_ptr->get_Sym_Entry_Ptr());
-				
-				//root->assign_Right(exp[(root->get_Right())->get_Name()]);
-			}
-		}
-		
-		if ((root->get_Left())->get_Tree_Op() == exp_var_Leaf)
-		{
-			//cout<<exp[(root->get_Left())->get_Name()]<<endl;
-			if (exp[(root->get_Left())->get_Name()] != 0)
-			{
-				sym_ptr = symtab_in_scope_P->get_Sym_Entry((root->get_Left())->get_Name());
-				root->assign_Left(sym_ptr->get_Sym_Entry_Ptr());
-				
-				//root->assign_Left(exp[(root->get_Left())->get_Name()]);
-			}
-		}
-		 		
-		check_for_exp(root->get_Left(),exp);
-		check_for_exp(root->get_Right(),exp);
-	}
-	
-	else if (root->get_Node_Arity() == unary)
-	{
-		if ((root->get_Pt())->get_Tree_Op() == exp_var_Leaf)
-		{
-			//cout<<"U"<<endl;
-			//cout<<exp[(root->get_Pt())->get_Name()]<<endl;
-			if (exp[(root->get_Pt())->get_Name()] != 0)
-			{
-				sym_ptr = symtab_in_scope_P->get_Sym_Entry((root->get_Pt())->get_Name());
-				root->assign_Pt(sym_ptr->get_Sym_Entry_Ptr());
-				
-				//root->assign_Pt(exp[(root->get_Pt())->get_Name()]);
-			}
-		}
-	
-		check_for_exp(root->get_Pt(),exp);
-	}
-}
-
-void clean_Ast_List(ast_List_Ptr alist)
-{
-	list<ast_Ptr>::iterator it, temp_it;
-	ast_Ptr flag[alist->size()];
-	int count = 0,i;
-	std::map<string,ast_Ptr> exp_list;
-	for (it=alist->begin() ; it != alist->end() ; ++it)
-	{
-		check_for_arti(*it);
-	}
-	
-	for (it=alist->begin() ; it != alist->end() ; ++it)
-	{	
-		if ( ((*it)->get_Tree_Op() == asgn) )
-		{
-			if ( (((*it)->get_Left())->get_Tree_Op() == name_Leaf) && (((*it)->get_Right())->get_Tree_Op() == name_Leaf) )
-			{
-				if ( ((*it)->get_Left())->get_Name() == ((*it)->get_Right())->get_Name() )
-				{
-					flag[count] = *it;
-					count++;
-				}
-			}
-			
-		}
-	}
-	for (i = 0 ; i<count ; i++)
-	{
-		alist->remove(flag[i]);
-	}
-	
-	ast_Ptr root;
-	
-	for (it = alist->begin() ; it != alist->end() ; ++it)
-	{	
-		check_for_exp(*it,exp_list);
-		
-		if ( ((*it)->get_Tree_Op() == asgn) && (((*it)->get_Left())->get_Tree_Op() == exp_var_Leaf) )
-		{
-			exp_list[((*it)->get_Left())->get_Name()] = (*it)->get_Right();
-			
-			sym_Entry_Ptr sym_ptr = symtab_in_scope_P->get_Sym_Entry(((*it)->get_Left())->get_Name());
-			sym_ptr->set_Sym_Entry_Ptr((*it)->get_Right());
-			//cout<<((*it)->get_Left())->get_Name()<<" "<<exp_list[((*it)->get_Left())->get_Name()]<<endl;
-		}
-	}
-	
-	count = 0;
-	for (it = alist->begin() ; it != alist->end() ; ++it)
-	{
-		root = *it;
-		if ((root->get_Tree_Op() == asgn) && ((root->get_Left())->get_Tree_Op() == exp_var_Leaf))
-		{
-			flag[count] = *it;
-			count++;
-		}
-	}
-	for (i = 0 ; i<count ; i++)
-	{
-		alist->remove(flag[i]);
-	}
-	
-	
+void arith_Ast::print_Node(ostream* fp) {
+    CHECK_INVARIANT(false, "should not be called for arith_ast")
 }

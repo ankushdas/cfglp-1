@@ -39,17 +39,6 @@ using namespace std;
 */
 
 
-int ast_Node::get_Num()
-{
-    CHECK_INVARIANT(SHOULD_NOT_REACH, "get_Num method cannot be called for a non-num ast node")
-}
-
-double ast_Node::get_d_Num()
-{
-    CHECK_INVARIANT(SHOULD_NOT_REACH, "get_Num method cannot be called for a non-num ast node")
-}
-
-
 /************* Methods for class asgn_Ast ******************/
 
 asgn_Ast::asgn_Ast(ast_Ptr  l, ast_Ptr  r, int line)
@@ -91,18 +80,13 @@ sym_Entry_Ptr name_Ast::get_Sym_Entry()
         return sym_entry;
 }
 
-/************* Methods for class num_Ast ******************/
+/************* Methods for class int_num_Ast ******************/
 
-num_Ast::num_Ast(int n)
+int_num_Ast::int_num_Ast(int n)
 {
     t_op = num_Leaf;
     num = n;
     node_arity = zero_Arity;
-}
-
-int num_Ast::get_Num()
-{
-    return num;
 }
 
 /************* Methods for class ret_Ast ******************/
@@ -112,33 +96,6 @@ ret_Ast::ret_Ast()
     t_op = ret;
     node_arity = zero_Arity;
 }
-
-
-/* new crude implementation */
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-
-/************* Methods for class arti_name_Ast ******************/
-//arti_var_Ast::arti_var_Ast(string n)
-//{
-//        t_op = arti_var_Leaf;
-//        name = n;
-//        node_arity = zero_Arity;
-//        sym_entry = symtab_in_scope_P->get_Sym_Entry(n);
-//}
-
-//arti_var_Ast::arti_var_Ast(string n, sym_Entry_Ptr s)
-//{
-//        t_op = arti_var_Leaf;
-//        name = n;
-//        node_arity = zero_Arity;
-//        sym_entry = s;
-//}
-
 
 exp_var_Ast::exp_var_Ast(string n)
 {
@@ -156,11 +113,6 @@ exp_var_Ast::exp_var_Ast(string n, sym_Entry_Ptr s)
         sym_entry = s;
 }
 
-//sym_Entry_Ptr arti_var_Ast::get_Sym_Entry()
-//{
-//        return sym_entry;
-//}
-
 sym_Entry_Ptr exp_var_Ast::get_Sym_Entry()
 {
         return sym_entry;
@@ -172,11 +124,6 @@ float_num_Ast::float_num_Ast(double n)
     t_op = num_Leaf;
     num = n;
     node_arity = zero_Arity;
-}
-
-double float_num_Ast::get_d_Num()
-{
-    return num;
 }
 
 
@@ -253,39 +200,8 @@ uminus_Ast::uminus_Ast(ast_Ptr p)
     CHECK_INVARIANT(p != NULL, "Child of an uminus tree node cannot be NULL")
     //CHECK_INVARIANT(l->get_Tree_Op() != num_Leaf, "Left child of an assignment tree node cannot be a number")
     CHECK_INVARIANT(p->get_Tree_Op() != asgn, "Child cannot be an assignment node")
-    pt = p;
-    data_type = pt->get_Val_Type();
+    left = p;
+    right = NULL;
+    data_type = left->get_Val_Type();
 }
-
-ast_Ptr ast_Node::get_Left()
-{
-	CHECK_INVARIANT(false, "get_Left() cannot be called for this node")
-}
-
-ast_Ptr ast_Node::get_Right()
-{
-	CHECK_INVARIANT(false, "get_Right() cannot be called for this node")
-}
-
-ast_Ptr ast_Node::get_Pt()
-{
-	CHECK_INVARIANT(false, "get_Pt() cannot be called for this node")
-}
-
-void ast_Node::assign_Left(ast_Ptr a)
-{
-	CHECK_INVARIANT(false, "assign_Left() cannot be called for this node")
-}
-
-void ast_Node::assign_Right(ast_Ptr a)
-{
-	CHECK_INVARIANT(false, "assign_Right() cannot be called for this node")
-}
-
-void ast_Node::assign_Pt(ast_Ptr a)
-{
-	CHECK_INVARIANT(false, "assign_Pt() cannot be called for this node")
-}
-
-
 

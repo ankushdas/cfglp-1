@@ -132,7 +132,6 @@ void basic_Block::print_BB(ostream * bb_fp)
     *bb_fp << " Basic Block Number " << bb_num << "\n";
 
     list <ast_Ptr>::iterator i;
-    //clean_Ast_List(ast_list);
     for (i = ast_list->begin(); i != ast_list->end(); i++)
        (*i)->print_Node(bb_fp); 
 }

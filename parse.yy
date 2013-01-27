@@ -428,7 +428,7 @@ expr :
  |  I_NUM[num]
 	{
 	    //nothing to check
-	    $$ = new num_Ast($num);
+	    $$ = new int_num_Ast($num);
 	}
  |  D_NUM[num]
 	{
@@ -562,16 +562,6 @@ ast_Ptr missing_Declaration_Error(bool lhs_d, string lhs_n, bool rhs_d, string r
 
 	return NULL; 
 }
-
-
-
-/*
-------------------------------------------------
-------------------------------------------------
-------------------------------------------------
-------------------------------------------------
-*/
-/* new implementation */
 
 
 ast_Ptr process_operator_Expr_Expr(ast_Ptr e1, ast_Ptr e2, char opr, int line)

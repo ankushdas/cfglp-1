@@ -40,6 +40,69 @@ int get_Size_of_Value_Type(value_Type vt);
 string sym_Entry::get_Name()               { return name; }
 int sym_Entry::get_Line_Number()           { return lineno; }
 
+
+/********************************* sym_Entry_for_Var ******************************/
+value_Type sym_Entry_for_Var::get_Value_Type()
+{
+    return type;
+} 
+
+sym_Scope sym_Entry_for_Var::get_Sym_Scope()
+{
+    return sym_scope;
+} 
+
+
+entity_Type sym_Entry_for_Var::get_Entity_Type()
+{
+    string mesg = "The entity type of name " + name + " should have been variable";
+    CHECK_INVARIANT (en_type == entity_Var, mesg)
+    return en_type;
+}
+
+var_Type sym_Entry_for_Var::get_Var_Type()
+{
+    return var_t;
+} 
+
+int sym_Entry_for_Var::get_Start_Offset()         { return start_offset;    }
+
+int sym_Entry_for_Var::get_End_Offset()           { return end_offset;    }
+
+void sym_Entry_for_Var::set_Start_Offset(int num) { start_offset = num;    }
+
+void sym_Entry_for_Var::set_End_Offset(int num)   { end_offset = num;    }
+
+bool sym_Entry_for_Var::is_Undefined()            { return undefined; }
+
+void sym_Entry_for_Var::reset_Undefined_Status()  { undefined = false; }
+
+void sym_Entry_for_Var::set_Reg(reg_Desc_Ptr r)   { reg_desc_ptr = r; }
+
+reg_Desc_Ptr sym_Entry_for_Var::get_Reg()         { return reg_desc_ptr; }
+
+void sym_Entry_for_Var::set_Value_of_Evaluation(eval_Result res)
+{
+    CHECK_INVARIANT(false, "should not be called for sym_entry_for_var class")
+}
+
+eval_Result sym_Entry_for_Var::get_Value_of_Evaluation()
+{
+    CHECK_INVARIANT(false, "should not be called for sym_entry_for_var class")
+}
+    
+void sym_Entry_for_Var::print_Sym_Entry_Eval_Details(ostream * sym_fp)
+{
+    CHECK_INVARIANT(false, "should not be called for sym_entry_for_var class")
+}
+
+void sym_Entry_for_Var::print_Sym_Entry_Details(ostream *p)
+{
+    CHECK_INVARIANT(false, "should not be called for sym_entry_for_var class")
+}
+
+
+
 /********************************* sym_Entry_for_Int_Var ******************************/
 
 sym_Entry_for_Int_Var::sym_Entry_for_Int_Var(string s, int line, var_Type v)
@@ -69,52 +132,9 @@ sym_Entry_for_Int_Var::sym_Entry_for_Int_Var(string s, int line, var_Type v)
     else CHECK_INVARIANT(SHOULD_NOT_REACH, "Stack top must be either local or global when a name is entered")
 }
 
-value_Type sym_Entry_for_Int_Var::get_Value_Type()
-{
-    string mesg = "The value type of variable " + name + " should have been int_Val";
-    CHECK_INVARIANT (type == int_Val, mesg)
-    return type;
-} 
-
-sym_Scope sym_Entry_for_Int_Var::get_Sym_Scope()
-{
-    string mesg = "The value type of variable " + name + " should have been int_Val";
-    CHECK_INVARIANT (type == int_Val, mesg)
-    return sym_scope;
-} 
-
-
-entity_Type sym_Entry_for_Int_Var::get_Entity_Type()
-{
-    string mesg = "The entity type of name " + name + " should have been variable";
-    CHECK_INVARIANT (en_type == entity_Var, mesg)
-    return en_type;
-}
-
-var_Type sym_Entry_for_Int_Var::get_Var_Type()
-{
-    return var_t;
-} 
-
-int sym_Entry_for_Int_Var::get_Start_Offset()         { return start_offset;    }
-
-int sym_Entry_for_Int_Var::get_End_Offset()           { return end_offset;    }
-
 int sym_Entry_for_Int_Var::get_Value()                { return value;    }
 
-void sym_Entry_for_Int_Var::set_Start_Offset(int num) { start_offset = num;    }
-
-void sym_Entry_for_Int_Var::set_End_Offset(int num)   { end_offset = num;    }
-
 void sym_Entry_for_Int_Var::set_Value(int num)        { value = num;    }
-
-bool sym_Entry_for_Int_Var::is_Undefined()            { return undefined; }
-
-void sym_Entry_for_Int_Var::reset_Undefined_Status()  { undefined = false; }
-
-void sym_Entry_for_Int_Var::set_Reg(reg_Desc_Ptr r)   { reg_desc_ptr = r; }
-
-reg_Desc_Ptr sym_Entry_for_Int_Var::get_Reg()         { return reg_desc_ptr; }
 
 
 /************************************* sym_List *************************/
@@ -396,51 +416,7 @@ sym_Entry_for_Float_Var::sym_Entry_for_Float_Var(string s, int line, var_Type v)
     else CHECK_INVARIANT(SHOULD_NOT_REACH, "Stack top must be either local or global when a name is entered")
 }
 
-value_Type sym_Entry_for_Float_Var::get_Value_Type()
-{
-    string mesg = "The value type of variable " + name + " should have been int_Val";
-    CHECK_INVARIANT (type == float_Val, mesg)
-    return type;
-} 
-
-sym_Scope sym_Entry_for_Float_Var::get_Sym_Scope()
-{
-    string mesg = "The value type of variable " + name + " should have been int_Val";
-    CHECK_INVARIANT (type == float_Val, mesg)
-    return sym_scope;
-} 
-
-
-entity_Type sym_Entry_for_Float_Var::get_Entity_Type()
-{
-    string mesg = "The entity type of name " + name + " should have been variable";
-    CHECK_INVARIANT (en_type == entity_Var, mesg)
-    return en_type;
-} 
-
-var_Type sym_Entry_for_Float_Var::get_Var_Type()
-{
-    return var_t;
-} 
-
-int sym_Entry_for_Float_Var::get_Start_Offset()         { return start_offset;    }
-
-int sym_Entry_for_Float_Var::get_End_Offset()           { return end_offset;    }
-
 double sym_Entry_for_Float_Var::get_Value()                { return value;    }
 
-void sym_Entry_for_Float_Var::set_Start_Offset(int num) { start_offset = num;    }
-
-void sym_Entry_for_Float_Var::set_End_Offset(int num)   { end_offset = num;    }
-
 void sym_Entry_for_Float_Var::set_Value(double num)        { value = num;    }
-
-bool sym_Entry_for_Float_Var::is_Undefined()            { return undefined; }
-
-void sym_Entry_for_Float_Var::reset_Undefined_Status()  { undefined = false; }
-
-void sym_Entry_for_Float_Var::set_Reg(reg_Desc_Ptr r)   { reg_desc_ptr = r; }
-
-reg_Desc_Ptr sym_Entry_for_Float_Var::get_Reg()         { return reg_desc_ptr; }
-
 

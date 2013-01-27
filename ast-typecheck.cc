@@ -104,12 +104,12 @@ string name_Ast::get_Name()
     return sym_entry->get_Name();
 }
 
-value_Type num_Ast::get_Val_Type()
+value_Type int_num_Ast::get_Val_Type()
 {
     return int_Val;
 }
 
-string num_Ast::get_Name()
+string int_num_Ast::get_Name()
 {
     /* We simply return a printable version of the number */
 
@@ -117,6 +117,20 @@ string num_Ast::get_Name()
     snum << num;
     return snum.str();
 }
+
+
+value_Type num_Ast::get_Val_Type()
+{
+  CHECK_INVARIANT(false, "get_Val_Type() cannot be called for this node")
+}
+
+
+string num_Ast::get_Name()
+{
+  CHECK_INVARIANT(SHOULD_NOT_REACH, "get_Name() cannot be called for this node")
+}
+
+
 
 /**************** Default bodies for virtual functions **************/
 
@@ -145,35 +159,6 @@ sym_Entry_Ptr ast_Node::get_Sym_Entry()
      CHECK_INVARIANT(SHOULD_NOT_REACH, "undefined get_Sym_Entry method called for an ast_Node Object")
 }
 
-
-/* new crude implementation */
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-
-/* methods for class arti_name_Ast*/
-//value_Type arti_var_Ast::get_Val_Type()
-//{
-//    CHECK_INVARIANT(sym_entry, "Sym entry of symbol cannot be NULL")
-//    return sym_entry->get_Value_Type();
-//}
-
-//entity_Type arti_var_Ast::get_Entity_Type()
-//{
-//    CHECK_INVARIANT(sym_entry, "Sym entry of symbol cannot be NULL")
-//    return sym_entry->get_Entity_Type();
-//}
-
-//string arti_var_Ast::get_Name()
-//{
-//    CHECK_INVARIANT(sym_entry, "Sym entry of symbol cannot be NULL")
-//    return sym_entry->get_Name();
-//}
-
-/* methods for class exp_var_Ast*/
 value_Type exp_var_Ast::get_Val_Type()
 {
     CHECK_INVARIANT(sym_entry, "Sym entry of symbol cannot be NULL")
@@ -208,28 +193,4 @@ string float_num_Ast::get_Name()
     return snum.str();
 }
 
-value_Type plus_Ast::get_Val_Type()
-{
-    return data_type;
-}
-
-value_Type minus_Ast::get_Val_Type()
-{
-    return data_type;
-}
-
-value_Type mult_Ast::get_Val_Type()
-{
-    return data_type;
-}
-
-value_Type div_Ast::get_Val_Type()
-{
-    return data_type;
-}
-
-value_Type uminus_Ast::get_Val_Type()
-{
-    return data_type;
-}
 

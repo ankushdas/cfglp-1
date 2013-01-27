@@ -124,7 +124,8 @@ ast_Code_Ptr asgn_Ast::compile()
                 load_reg = get_New_Reg();
 
             reg_opd = new reg_Addr_Opd(load_reg);
-            opd1 = new const_Opd(right->get_Num());
+            //opd1 = new const_Opd(right->get_Num());
+            if (right->get_Tree_Op() == num_Leaf) opd1 = new const_Opd(((int_num_Ast*)right)->get_Num());
             load_stmt = new move_IC_Stmt(imm_Load, opd1,reg_opd);
             break;
         default:

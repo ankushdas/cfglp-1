@@ -52,5 +52,3 @@ class icode_Stmt;
 typedef icode_Stmt * icode_Stmt_Ptr;
 
 typedef list<icode_Stmt_Ptr> icode_Stmt_List;
-
-void clean_Ast_List(ast_List_Ptr alist);
